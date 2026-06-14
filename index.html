@@ -3,17 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Hubert Peer – Projekte aus Wien. Consultant, Goalkeeper, Bastler.">
+  <meta name="description" content="Hubert Peer – Projekte aus Wien. Code, Fußball &amp; mehr.">
   <meta property="og:title" content="derhupo.at">
-  <meta property="og:description" content="Projekte aus Wien. Consultant bei Tag, Goalkeeper am Abend.">
+  <meta property="og:description" content="Hubert Peer – Projekte aus Wien. Code, Fußball &amp; mehr.">
   <meta property="og:url" content="https://derhupo.at">
   <title>derhupo.at</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/tokens.css">
   <style>
-    /* ── Layout container ── */
+    /* ── Layout ── */
     .page {
       width: 100%;
       max-width: 480px;
@@ -73,29 +70,64 @@
 
     .hero-title {
       font-family: 'IM Fell English', Georgia, serif;
-      font-size: 52px;
+      font-size: clamp(38px, 11vw, 52px);
       font-weight: 400;
       color: var(--text);
       line-height: 0.95;
-      margin-bottom: 18px;
       letter-spacing: -1px;
     }
 
-    .hero-title .punct {
-      color: var(--red);
+    .hero-title .punct  { color: var(--red); }
+    .hero-title .highlight { color: var(--yellow); font-style: italic; }
+
+    /* ── Werte-Treppe ── */
+    .values {
+      padding: 28px 24px 0;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 28px;
     }
 
-    .hero-title .highlight {
-      color: var(--yellow);
-      font-style: italic;
+    .values-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 16px;
     }
 
-    .hero-bio {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.65;
-      max-width: 300px;
+    .values-stair {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
+
+    .values-stair .step {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 5px 0;
+      border-left: 2px solid transparent;
+      padding-left: 12px;
+      transition: border-color 0.15s;
+    }
+
+    .values-stair .step:nth-child(1)  { margin-left: 0px; }
+    .values-stair .step:nth-child(2)  { margin-left: 12px; }
+    .values-stair .step:nth-child(3)  { margin-left: 24px; }
+    .values-stair .step:nth-child(4)  { margin-left: 36px; }
+    .values-stair .step:nth-child(5)  { margin-left: 48px; }
+    .values-stair .step:nth-child(6)  { margin-left: 60px; }
+    .values-stair .step:nth-child(7)  { margin-left: 72px; }
+    .values-stair .step:nth-child(8)  { margin-left: 84px; }
+
+    .step-text {
+      font-family: 'IM Fell English', Georgia, serif;
+      font-size: 17px;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .step-text.red { color: var(--red); }
 
     /* ── Section ── */
     .section {
@@ -129,19 +161,16 @@
       color: inherit;
       transition: border-color 0.15s, transform 0.1s;
       -webkit-tap-highlight-color: transparent;
+      min-height: 48px;
     }
 
-    .card:hover {
-      border-color: var(--border-mid);
-    }
-
-    .card:active {
-      transform: scale(0.985);
-    }
+    .card:hover  { border-color: var(--border-mid); }
+    .card:active { transform: scale(0.985); }
 
     .card-icon {
       width: 40px;
       height: 40px;
+      min-width: 40px;
       border-radius: var(--radius-icon);
       border: 0.5px solid var(--border);
       background: var(--bg);
@@ -149,7 +178,6 @@
       align-items: center;
       justify-content: center;
       font-size: 20px;
-      flex-shrink: 0;
       line-height: 1;
     }
 
@@ -173,10 +201,9 @@
       font-weight: 400;
       color: var(--text);
       line-height: 1.2;
-    }
-
-    .card-name-display .tld {
-      color: var(--red);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .card-url {
@@ -196,6 +223,7 @@
       border-radius: 5px;
       flex-shrink: 0;
       letter-spacing: 0.04em;
+      white-space: nowrap;
     }
 
     .badge-live {
@@ -210,7 +238,6 @@
       border: 0.5px solid var(--red-border);
     }
 
-    /* ── Placeholder-Card ── */
     .card-placeholder {
       background: transparent;
       border: 0.5px dashed var(--border);
@@ -222,17 +249,8 @@
       opacity: 0.5;
     }
 
-    .card-placeholder .card-icon {
-      border-style: dashed;
-      font-size: 18px;
-      color: var(--text-faint);
-    }
-
-    .card-placeholder .card-name {
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--text-faint);
-    }
+    .card-placeholder .card-icon { border-style: dashed; font-size: 18px; color: var(--text-faint); }
+    .card-placeholder .card-name { font-size: 14px; font-weight: 400; color: var(--text-faint); }
 
     /* ── Divider ── */
     .divider {
@@ -241,7 +259,7 @@
       border-top: 1px solid var(--border);
     }
 
-    /* ── About-Bereich ── */
+    /* ── About-Tags ── */
     .about {
       padding: 24px 24px 0;
     }
@@ -272,11 +290,12 @@
 
     /* ── Footer ── */
     footer {
-      padding: 20px 24px 0;
+      padding: 16px 24px 0;
       border-top: 2px solid var(--red);
       margin-top: 36px;
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: 6px;
     }
 
@@ -293,13 +312,22 @@
       line-height: 1;
     }
 
-    .footer-right {
+    .footer-links {
       margin-left: auto;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .footer-link {
       font-size: 10px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--text-faint);
+      text-decoration: none;
     }
+
+    .footer-link:hover { color: var(--text-muted); }
 
     /* ── Responsive ── */
     @media (min-width: 520px) {
@@ -309,8 +337,14 @@
       }
     }
 
+    @media (max-width: 360px) {
+      .values-stair .step:nth-child(n+6) { margin-left: 48px; }
+      .values-stair .step:nth-child(n+7) { margin-left: 48px; }
+      .values-stair .step:nth-child(n+8) { margin-left: 48px; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      .card { transition: none; }
+      .card, .step { transition: none; }
     }
   </style>
 </head>
@@ -331,10 +365,20 @@
       Fußball<span class="punct">.</span><br>
       <span class="highlight">&amp; mehr.</span>
     </h1>
-    <p class="hero-bio">
-      Consultant bei Tag, Goalkeeper am Abend.
-      Projekte aus dem 11. Bezirk.
-    </p>
+  </section>
+
+  <section class="values">
+    <p class="values-label">Werte</p>
+    <div class="values-stair">
+      <div class="step"><span class="step-text">Fußball</span></div>
+      <div class="step"><span class="step-text">Love</span></div>
+      <div class="step"><span class="step-text">Peace</span></div>
+      <div class="step"><span class="step-text">Respect</span></div>
+      <div class="step"><span class="step-text red">No Homophobia</span></div>
+      <div class="step"><span class="step-text red">No Racism</span></div>
+      <div class="step"><span class="step-text red">No Violence</span></div>
+      <div class="step"><span class="step-text red">No Sexism</span></div>
+    </div>
   </section>
 
   <section class="section" style="margin-top: 28px;">
@@ -344,13 +388,13 @@
       <a class="card" href="https://tipp.derhupo.at" target="_blank" rel="noopener">
         <div class="card-icon">⚽</div>
         <div class="card-body">
-          <div class="card-name-display">Pepi's Tippspiel<span class="tld"></span></div>
+          <div class="card-name-display">Pepi's Tippspiel</div>
           <div class="card-url">tipp.derhupo.at</div>
         </div>
         <span class="badge badge-live">live</span>
       </a>
 
-      <a class="card" href="#" target="_blank" rel="noopener">
+      <a class="card" href="https://hupo.myspreadshop.at" target="_blank" rel="noopener">
         <div class="card-icon">💀</div>
         <div class="card-body">
           <div class="card-name">WSC Seniors</div>
@@ -389,7 +433,10 @@
     <span class="footer-text">derhupo</span>
     <span class="footer-dot">·</span>
     <span class="footer-text">at</span>
-    <span class="footer-right">2026</span>
+    <div class="footer-links">
+      <a class="footer-link" href="impressum.html">Impressum</a>
+      <a class="footer-link" href="datenschutz.html">Datenschutz</a>
+    </div>
   </footer>
 
 </div>
