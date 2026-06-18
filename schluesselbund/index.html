@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schlüsselbund – wenn du keinen dabei hast</title>
+<meta name="description" content="Digitaler Schlüsselbund für die Standardsituation. Hand antippen, das Klimpern füllt den ganzen Bildschirm. Plus: woher der Brauch kommt und der Dornbach-Bezug.">
+<style>
+  @font-face {
+    font-family: 'IM Fell English';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../assets/fonts/im-fell-english-regular.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'IM Fell English';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../assets/fonts/im-fell-english-italic.woff2') format('woff2');
+  }
+
+  :root{
+    --bg:#f0efeb; --surface:#ffffff; --border:#ddddd8; --border-mid:#c8c8c2;
+    --text:#1a1a1a; --text-muted:#888880; --text-faint:#bbbbb5;
+    --red:#cc2525; --ink:#111111;
+    --display:'IM Fell English', Georgia, serif;
+    --body:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --mono:ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px}
+
+  header{border-bottom:2px solid var(--red);background:var(--surface)}
+  .head-inner{max-width:760px;margin:0 auto;padding:18px 24px;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+  .brand{font-family:var(--display);font-size:22px;letter-spacing:.5px}
+  .brand b{color:var(--red);font-weight:400}
+  .head-meta{font-family:var(--mono);font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px}
+
+  .hero{padding:48px 0 30px;text-align:center}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin:0 0 14px}
+  h1{font-family:var(--display);font-weight:400;font-size:clamp(38px,8vw,62px);line-height:1.02;margin:0}
+
+  /* Kleine Hand = Auslöser */
+  .stage{
+    margin:34px auto 6px;width:320px;max-width:82vw;position:relative;cursor:pointer;
+    user-select:none;-webkit-user-select:none;border:none;background:none;padding:0;display:block;
+    -webkit-tap-highlight-color:transparent;line-height:0;
+  }
+  .stage:focus-visible{outline:3px solid var(--red);outline-offset:10px;border-radius:14px}
+  .stage img{width:100%;height:auto;display:block;transition:transform .15s}
+  .stage:hover img{transform:translateY(-3px)}
+  .tap-hint{font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--text-faint);text-align:center;margin:14px 0 0}
+  .stage:hover ~ .tap-hint{color:var(--text-muted)}
+
+  /* Vollbild-Overlay */
+  .overlay{
+    position:fixed;inset:0;z-index:50;background:var(--bg);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;
+    opacity:0;visibility:hidden;transition:opacity .25s ease;cursor:pointer;
+  }
+  .overlay.open{opacity:1;visibility:visible}
+  .overlay img{width:min(82vw,78vh);height:auto;transform-origin:50% 28%}
+  .overlay.open img{animation:shake .16s ease-in-out infinite}
+  .overlay .big-hint{font-family:var(--mono);font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red)}
+  .overlay .closex{position:absolute;top:20px;right:24px;font-family:var(--mono);font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);border:1px solid var(--border-mid);border-radius:999px;padding:8px 14px;background:var(--surface)}
+
+  @keyframes shake{
+    0%{transform:rotate(0)} 20%{transform:rotate(-2.6deg)} 40%{transform:rotate(1.9deg)}
+    60%{transform:rotate(-1.5deg)} 80%{transform:rotate(2.6deg)} 100%{transform:rotate(0)}
+  }
+
+  .audio-missing{display:none;max-width:520px;margin:18px auto 0;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--text-muted)}
+  .audio-missing code{font-family:var(--mono);font-size:12px;color:var(--text);background:var(--bg);padding:1px 5px;border-radius:4px}
+
+  section.read{padding:8px 0 4px}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin:34px 0 10px;display:flex;align-items:center;gap:12px}
+  .kicker::after{content:"";flex:1;height:1px;background:var(--border-mid)}
+  section.read h2{font-family:var(--display);font-weight:400;font-size:30px;line-height:1.1;margin:0 0 12px}
+  section.read p{margin:0 0 16px;font-size:16.5px}
+
+  .club{border-left:2px solid var(--red);padding:4px 0 4px 18px;margin:0 0 22px}
+  .club h3{font-family:var(--display);font-weight:400;font-size:21px;margin:0 0 4px}
+  .club .where{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin:0 0 6px}
+  .club p{font-size:15.5px;margin:0}
+
+  .note{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;font-size:14.5px;color:var(--text-muted);margin:24px 0}
+  .note b{color:var(--text)}
+
+  footer{border-top:2px solid var(--red);background:var(--surface);margin-top:40px;padding:22px 0}
+  .foot-inner{max-width:760px;margin:0 auto;padding:0 24px;font-family:var(--mono);font-size:12px;color:var(--text-muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+  @media (max-width:520px){ .head-meta{display:none} }
+  @media (prefers-reduced-motion: reduce){ .overlay.open img{animation:none} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-inner">
+    <div class="brand"><a href="/" style="text-decoration:none;color:inherit">der<b>hupo</b><span style="color:var(--red)">.at</span></a> <span style="font-size:16px;color:var(--text-muted);font-weight:400"> / <b>Schlüsselbund</b></span></div>
+    <div class="head-meta">Standardsituation · Sound an</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="hero">
+    <p class="eyebrow">Ecke · Freistoß · jetzt!</p>
+    <h1>Keinen Schlüssel dabei?</h1>
+
+    <button class="stage" id="stage" aria-label="Schlüsselbund im Vollbild klimpern lassen">
+      <img id="handimg" src="hand_outline.png" alt="Hand mit Schlüsselbund" draggable="false">
+    </button>
+    <p class="tap-hint" id="hint">Tippen – füllt den Bildschirm</p>
+
+    <div class="audio-missing" id="missing">
+      Klang-Datei nicht gefunden. Lege <code>klimpern.mp3</code> in denselben Ordner wie diese Seite.
+    </div>
+  </div>
+
+  <section class="read">
+    <p class="kicker">Der Brauch</p>
+    <h2>Warum klimpern Fans mit dem Schlüssel?</h2>
+    <p>Statt Trommeln, Bengalos oder Pfeifen greifen manche Fans zu etwas, das fast jeder in der Tasche hat: dem Schlüsselbund. Sobald die eigene Mannschaft eine gute Standardsituation hat – also einen Eckball oder einen gefährlichen Freistoß – holen sie die Schlüssel heraus und rasseln, bis der Ball gespielt wird. Ein kurzer, metallischer Lärm, der die Spannung hörbar macht.</p>
+    <p>Beim <b>Wiener Sportclub</b> gehört das Schlüsselrasseln zur berühmten Friedhofstribüne und gilt als akustisches Erkennungszeichen. Wichtig: Es passiert <b>nicht</b> bei jeder Standardsituation, sondern bei den <b>aussichtsreichen</b> – vor allem bei Ecken und guten Freistößen.</p>
+  </section>
+
+  <section class="read">
+    <p class="kicker">Warum ausgerechnet Schlüssel?</p>
+    <h2>Der Dornbach-Bezug</h2>
+    <p>Der Sportclub-Platz liegt in <b>Dornbach</b> – und Dornbach trägt zwei gekreuzte Schlüssel im Wappen. Sie stehen für den Apostel Petrus (die „Schlüssel zum Himmelreich") und gehen auf das Salzburger <b>Stift St. Peter</b> zurück, dem der Grund seit Jahrhunderten gehört. Der Verein mietete den Platz 1904 genau von diesem Stift. Die Schlüssel sind in Dornbach also kein Zufall, sondern altes Ortssymbol.</p>
+    <p>Es liegt nahe, den Klimper-Brauch mit diesem Wappen zu verbinden. <b>Aber ehrlich:</b> Dass die Fans <i>deshalb</i> zu klimpern begannen, ist nicht belegt. Die Schlüssel im Wappen und das Schlüsselklimpern gibt es beide – ob das eine das andere ausgelöst hat, sagt keine gesicherte Quelle. Eine schöne Deutung, aber kein bewiesener Ursprung.</p>
+  </section>
+
+  <section class="read">
+    <p class="kicker">Nicht nur der Sportclub</p>
+    <h2>Wer noch klimpert</h2>
+    <div class="club">
+      <h3>Wiener Sportclub</h3>
+      <p class="where">Wien · Regionalliga Ost</p>
+      <p>Schlüsselrasseln bei aussichtsreichen Ecken und Freistößen – Teil einer britisch geprägten, gewaltfreien Fankultur mit Gesängen statt Pyrotechnik.</p>
+    </div>
+    <div class="club">
+      <h3>SC Freiburg</h3>
+      <p class="where">Freiburg · Bundesliga</p>
+      <p>Bei Eckbällen wandert hier der Schlüsselbund aus der Tasche. Der Brauch ist so prägend, dass sich ein Fanclub danach benannt hat: die „Schlüsselkinder" (offiziell gegründet 2020). Das Motiv auf vielen Stickern: „SCHLUESSELKINDER · FRBG · 1904".</p>
+    </div>
+    <div class="club">
+      <h3>US-College-Football</h3>
+      <p class="where">USA · z. B. Northwestern, Michigan</p>
+      <p>Auch hier klimpern Fans mit Schlüsseln – aber meist beim Kickoff und mit ganz anderer, spöttischer Bedeutung („wir sind eh akademisch überlegen"). Mit der Standardsituation hat das nichts zu tun.</p>
+    </div>
+  </section>
+
+  <div class="note">
+    <b>Ehrlich bleibt ehrlich:</b> Den genauen Ursprung – wer zuerst, seit wann – konnte ich für keinen der Vereine sicher belegen. Bestätigt ist, <i>dass</i> und <i>wann im Spiel</i> geklimpert wird, nicht das <i>Woher</i>. Wer es aufklären will, fragt am besten direkt bei den Fanclubs nach.
+  </div>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>Ein Klimper-Behelf für die Tribüne.</span>
+    <span>Ton läuft im Browser · einmal antippen genügt</span>
+  </div>
+</footer>
+
+<!-- Vollbild-Overlay -->
+<div class="overlay" id="overlay" role="dialog" aria-label="Schlüsselbund klimpert">
+  <span class="closex">✕ Tippen zum Stoppen</span>
+  <img src="hand_outline.png" alt="Großer Schlüsselbund, der klimpert" draggable="false">
+  <span class="big-hint">…klingelt… irgendwo tippen zum Stoppen</span>
+</div>
+
+<audio id="snd" src="klimpern.mp3" loop preload="auto"></audio>
+
+<script>
+(function(){
+  "use strict";
+  var stage=document.getElementById("stage");
+  var overlay=document.getElementById("overlay");
+  var snd=document.getElementById("snd");
+  var missing=document.getElementById("missing");
+  var open=false;
+
+  snd.addEventListener("error",function(){ missing.style.display="block"; });
+
+  function start(){
+    var p=snd.play();
+    if(p&&p.catch){ p.catch(function(){ missing.style.display="block"; }); }
+    open=true; overlay.classList.add("open");
+  }
+  function stop(){
+    snd.pause(); snd.currentTime=0;
+    open=false; overlay.classList.remove("open");
+  }
+
+  stage.addEventListener("click",start);
+  stage.addEventListener("keydown",function(e){ if(e.code==="Space"||e.code==="Enter"){e.preventDefault();start();} });
+  overlay.addEventListener("click",stop);
+  document.addEventListener("keydown",function(e){ if(open&&e.code==="Escape"){ stop(); } });
+})();
+</script>
+</body>
+</html>
