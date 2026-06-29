@@ -82,6 +82,14 @@
 
     .hero-title .punct { color: var(--red); }
 
+    /* "Fußball." als Bild: füllt die Breite, behält Seitenverhältnis */
+    .hero-img {
+      display: block;
+      width: 100%;
+      max-width: 420px;
+      height: auto;
+    }
+
     /* ── Werte-Treppe ── */
     .values {
       padding: 24px 24px 24px;
@@ -348,7 +356,7 @@
 
   <section class="hero">
     <h1 class="hero-title">
-      Fußball<span class="punct">.</span>
+      <img class="hero-img" src="assets/img/heanoisisois.png" alt="heanois is ois">
     </h1>
   </section>
 
